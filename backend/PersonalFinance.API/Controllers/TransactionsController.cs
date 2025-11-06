@@ -188,7 +188,7 @@ namespace PersonalFinance.API.Controllers
 
             var responseDto = new TransactionDto
             {
-                Id = updated.Id,
+                Id = updated!.Id,
                 CategoryId = updated.CategoryId,
                 CategoryName = updated.Category.Name,
                 CategoryIcon = updated.Category.Icon ?? "",

@@ -14,6 +14,8 @@ namespace PersonalFinance.API.Controllers
     {
         private readonly ICategoryRepository _categoryRepository;
 
+        //dependency injection from ICategoryRepository, which is implemented in CategoryRepository
+        //follows the dependency inversion principle
         public CategoriesController(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;

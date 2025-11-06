@@ -55,7 +55,8 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-
+builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
+builder.Services.AddScoped<IReportsRepository, ReportsRepository>();
 
 //Configure JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
