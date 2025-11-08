@@ -1,25 +1,38 @@
 import React from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Personal Finance Dashboard </h1>
-      <p>Welcome, {user?.firstName} {user?.lastName}!</p>
-      <button onClick={handleLogout} style={{ padding: '10px 20px', cursor: 'pointer' }}>
-        Logout
-      </button>
-      <div style={{ marginTop: '30px' }}>
-        <p>Dashboard content coming soon...</p>
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        {/* Summary Cards */}
+        <div className="bg-white rounded-lg shadow p-6">
+          <p className="text-gray-500 text-sm font-medium">Total Income</p>
+          <p className="text-3xl font-bold text-green-600 mt-2">$0.00</p>
+        </div>
+        <div className="bg-white rounded-lg shadow p-6">
+          <p className="text-gray-500 text-sm font-medium">Total Expenses</p>
+          <p className="text-3xl font-bold text-red-600 mt-2">$0.00</p>
+        </div>
+        <div className="bg-white rounded-lg shadow p-6">
+          <p className="text-gray-500 text-sm font-medium">Balance</p>
+          <p className="text-3xl font-bold text-blue-600 mt-2">$0.00</p>
+        </div>
+      </div>
+
+      {/* Charts Placeholder */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white rounded-lg shadow p-6">
+          <h3 className="text-lg font-semibold mb-4">Spending by Category</h3>
+          <div className="h-64 flex items-center justify-center text-gray-400">
+            Chart coming soon...
+          </div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-6">
+          <h3 className="text-lg font-semibold mb-4">Income vs Expenses</h3>
+          <div className="h-64 flex items-center justify-center text-gray-400">
+            Chart coming soon...
+          </div>
+        </div>
       </div>
     </div>
   );
