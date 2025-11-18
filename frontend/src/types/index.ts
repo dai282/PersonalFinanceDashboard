@@ -37,3 +37,18 @@ export interface Budget {
   percentageUsed: number;
   status: string;
 }
+
+export interface PaginatedTransactions{
+  transactions: Transaction[];
+  totalcount: number;
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+}
+
+export interface CreateTransaction{
+  categoryId: number;
+  amount: number;
+  description: string;
+  transactionDate: Date;
+}

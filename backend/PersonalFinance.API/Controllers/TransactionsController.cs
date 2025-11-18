@@ -32,7 +32,7 @@ namespace PersonalFinance.API.Controllers
         [HttpGet]
         public async Task<ActionResult<PaginatedTransactionsDto>> GetTransactions(
             [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 10,
+            [FromQuery] int pageSize = 5,
             [FromQuery] int? categoryId = null,
             [FromQuery] DateTime? startDate = null,
             [FromQuery] DateTime? endDate = null)
