@@ -92,3 +92,14 @@ export interface IncomeVsExpenseTrends {
   endDate: string;
   trends: MonthlyTrendData[];
 }
+
+export interface CreateBudget{
+  categoryId: number;
+  amount: number;
+  month: number;
+  year: number;
+}
+
+export interface EditBudget{
+  amount: number;
+}

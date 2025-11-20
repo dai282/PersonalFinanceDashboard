@@ -11,7 +11,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Transactions from "./pages/transactions/Transactions";
-import Budgets from "./pages/Budgets";
+import Budgets from "./pages/budget/Budgets";
 import Categories from "./pages/Categories";
 import PrivateRoute from "./components/PrivateRoute";
 

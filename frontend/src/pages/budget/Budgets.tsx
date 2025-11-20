@@ -1,14 +1,13 @@
 import React from 'react';
+import BudgetList from './BudgetList';
 
-const Budgets: React.FC = () => {
+export default function Budgets() {
   return (
     <div>
       <h3 className="text-xl font-semibold mb-4">Budgets</h3>
       <div className="bg-white rounded-lg shadow p-6">
-        <p className="text-gray-600">Budget management coming soon...</p>
+        <BudgetList />
       </div>
     </div>
   );
 };
-
-export default Budgets;

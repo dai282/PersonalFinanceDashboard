@@ -3,7 +3,17 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { SpendingByCategoryData } from "../../types";
 import { getSpendingByCategory } from "../../services/reportsService";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8", "#FF6B6B", "#4ECDC4", "#45B7D1", "#F7DC6F"];
+const COLORS = [
+  "#0088FE",
+  "#00C49F",
+  "#FFBB28",
+  "#FF8042",
+  "#8884D8",
+  "#FF6B6B",
+  "#4ECDC4",
+  "#45B7D1",
+  "#F7DC6F",
+];
 
 export default function SpendingByCategoryChart({
   isAnimationActive = true,
@@ -35,7 +45,7 @@ export default function SpendingByCategoryChart({
     innerRadius,
     outerRadius,
     percent,
-    name
+    name,
   }: any) => {
     if (percent < 0.05) return null;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -80,7 +90,10 @@ export default function SpendingByCategoryChart({
           isAnimationActive={isAnimationActive}
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${entry.categoryName}`} fill={COLORS[index % COLORS.length]} />
+            <Cell
+              key={`cell-${entry.categoryName}`}
+              fill={COLORS[index % COLORS.length]}
+            />
           ))}
         </Pie>
       </PieChart>
