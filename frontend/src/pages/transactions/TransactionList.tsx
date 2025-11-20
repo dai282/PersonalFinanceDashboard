@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Category, PaginatedTransactions } from "../types";
-import api from "../services/api";
-import Confirmation from "./Confirmation";
+import { Category, PaginatedTransactions } from "../../types";
+import api from "../../services/api";
+import Confirmation from "../../components/Confirmation";
 
 interface TransactionListProps {
   //define onFormOpen so that it passes in a transction id
@@ -9,7 +9,10 @@ interface TransactionListProps {
   categories: Category[];
 }
 
-export default function TransactionList({onFormOpen, categories,}: TransactionListProps) {
+export default function TransactionList({
+  onFormOpen,
+  categories,
+}: TransactionListProps) {
   const [paginatedTransactions, setTransactions] =
     useState<PaginatedTransactions>();
   const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +20,9 @@ export default function TransactionList({onFormOpen, categories,}: TransactionLi
   const [pageNumber, setPageNumber] = useState(1);
   const [isConfirmationVisible, setIsConfirmationVisible] = useState(false);
   const [transactionToDelete, setTransactionToDelete] = useState<number>();
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  );
   const [selectedStartDate, setSelectedStartDate] = useState<string>("");
   const [selectedEndDate, setSelectedEndDate] = useState<string>("");
   const [filters, setFilters] = useState<{

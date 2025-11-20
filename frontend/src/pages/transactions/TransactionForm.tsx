@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Transaction, Category, CreateTransaction } from "../types";
-import api from "../services/api";
+import { Transaction, Category, CreateTransaction } from "../../types";
+import api from "../../services/api";
 
 interface TransactionFormProps {
   onClose: () => void;
@@ -9,7 +9,12 @@ interface TransactionFormProps {
   categories: Category[];
 }
 
-export default function TransactionForm({ onClose , formType, transactionId, categories}: TransactionFormProps) {
+export default function TransactionForm({
+  onClose,
+  formType,
+  transactionId,
+  categories,
+}: TransactionFormProps) {
   const [formData, setFormData] = useState<CreateTransaction>({
     categoryId: 0,
     amount: 0,
@@ -19,6 +24,12 @@ export default function TransactionForm({ onClose , formType, transactionId, cat
 
   const [pressedSubmit, setpressedSubmit] = useState(false);
   const [submissionResult, setSubmissionResult] = useState<string>();
+
+  useEffect(() => {
+    if (formType === "create" && categories.length > 0) {
+      setFormData((prev) => ({ ...prev, categoryId: categories[0].id }));
+    }
+  }, [categories, formType]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -50,23 +61,25 @@ export default function TransactionForm({ onClose , formType, transactionId, cat
     }
     try {
       setSubmissionResult("Success!");
-      const response = await formType === 'create'
-        ? api.post("/transactions", formData)
-        : api.put(`/transactions/${transactionId}`, formData);
+      const response =
+        (await formType) === "create"
+          ? api.post("/transactions", formData)
+          : api.put(`/transactions/${transactionId}`, formData);
       console.log(response);
     } catch (error) {
       console.error(error);
     }
   }
 
-
-  //when a formType and transactionId is changed (i.e when the edit button is clicked), 
+  //when a formType and transactionId is changed (i.e when the edit button is clicked),
   //get the transaction data and map it to the form fields
   useEffect(() => {
     const getTransaction = async () => {
-      if (formType === 'edit' && transactionId) {
+      if (formType === "edit" && transactionId) {
         try {
-          const response = await api.get<Transaction>(`/transactions/${transactionId}`);
+          const response = await api.get<Transaction>(
+            `/transactions/${transactionId}`
+          );
           const transaction = response.data;
           setFormData({
             categoryId: transaction.categoryId,
@@ -102,7 +115,9 @@ export default function TransactionForm({ onClose , formType, transactionId, cat
           </div>
         )}
         <h3 className="text-center text-lg font-bold m-4">
-          {formType === 'create'? "Create a Transaction" : "Edit a Transaction"}
+          {formType === "create"
+            ? "Create a Transaction"
+            : "Edit a Transaction"}
         </h3>
         <div className="mb-4">
           <label
