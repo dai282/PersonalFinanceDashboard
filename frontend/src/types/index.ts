@@ -103,3 +103,9 @@ export interface CreateBudget{
 export interface EditBudget{
   amount: number;
 }
+
+export interface CreateEditCategory{
+  name: string;
+  type: string;
+  icon: string;
+}
