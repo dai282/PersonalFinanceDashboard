@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Category, CreateBudget } from "../../types";
+import { useState } from "react";
+import { CreateBudget } from "../../types";
 import api from "../../services/api";
 
 interface EditBudgetFormProps {

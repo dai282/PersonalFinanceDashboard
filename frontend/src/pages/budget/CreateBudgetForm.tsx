@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Category, CreateBudget } from "../../types";
 import api from "../../services/api";
 
