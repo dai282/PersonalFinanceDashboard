@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PersonalFinance.Infrastructure.Data
 {
-    public class ApplicationDbContext: DbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

@@ -6,10 +6,12 @@ namespace PersonalFinance.Infrastructure.Data
     {
         public static async Task SeedDefaultCategories(ApplicationDbContext context)
         {
-            if (context.Categories.Any())
-                return; // Already seeded
+            try
+            {
+                if (context.Categories.Any())
+                    return; // Already seeded
 
-            var defaultCategories = new List<Category>
+                var defaultCategories = new List<Category>
             {
                 // Expense categories
                 new Category { Name = "Food & Dining", Type = "Expense", Icon = "🍔", UserId = null },
@@ -31,8 +33,16 @@ namespace PersonalFinance.Infrastructure.Data
                 new Category { Name = "Other Income", Type = "Income", Icon = "💵", UserId = null }
             };
 
-            context.Categories.AddRange(defaultCategories);
-            await context.SaveChangesAsync();
+                context.Categories.AddRange(defaultCategories);
+                await context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log but don't throw - let app continue even if seeding fails
+                Console.WriteLine($"Error seeding categories: {ex.Message}");
+            }
+
+
         }
     }
 }

@@ -1,40 +1,42 @@
 import { useState, useEffect } from "react";
-import { Transaction, Category, CreateTransaction } from "../types";
-import api from "../services/api";
+import {
+  Transaction,
+  Category,
+  CreateTransaction,
+  CreateEditCategory,
+} from "../../types";
+import api from "../../services/api";
 
-interface TransactionFormProps {
+interface CreateEditCategoryFormProps {
   onClose: () => void;
+  setpressedSubmit: (submit:boolean) => void;
+  pressedSubmit: boolean;
   formType: string;
-  transactionId?: number | null;
-  categories: Category[];
+  categoryId?: number | null;
 }
 
-export default function TransactionForm({ onClose , formType, transactionId, categories}: TransactionFormProps) {
-  const [formData, setFormData] = useState<CreateTransaction>({
-    categoryId: 0,
-    amount: 0,
-    description: "",
-    transactionDate: new Date(),
+export default function CreateEditCategoryForm({
+  onClose,
+  setpressedSubmit,
+  pressedSubmit,
+  formType,
+  categoryId,
+}: CreateEditCategoryFormProps) {
+  const [formData, setFormData] = useState<CreateEditCategory>({
+    name: "",
+    type: "Income",
+    icon: "",
   });
-
-  const [pressedSubmit, setpressedSubmit] = useState(false);
   const [submissionResult, setSubmissionResult] = useState<string>();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value, type } = e.target;
-    const parsedValue =
-      type === "number" || name === "categoryId"
-        ? Number(value)
-        : //if the date is changed, transform it back to Date format instead of ISO string
-        type === "date"
-        ? new Date(value)
-        : value;
+    const { name, value } = e.target;
 
     setFormData((prevState) => ({
       ...prevState!,
-      [name]: parsedValue,
+      [name]: value,
     }));
   };
 
@@ -44,43 +46,38 @@ export default function TransactionForm({ onClose , formType, transactionId, cat
     setTimeout(() => {
       setpressedSubmit(false);
     }, 3000);
-    if (formData.amount <= 0) {
-      setSubmissionResult("Amount must be greater than 0!");
-      return;
-    }
     try {
       setSubmissionResult("Success!");
-      const response = await formType === 'create'
-        ? api.post("/transactions", formData)
-        : api.put(`/transactions/${transactionId}`, formData);
+      const response =
+        (await formType) === "create"
+          ? api.post("/Categories", formData)
+          : api.put(`/Categories/${categoryId}`, formData);
       console.log(response);
     } catch (error) {
       console.error(error);
     }
   }
 
-
-  //when a formType and transactionId is changed (i.e when the edit button is clicked), 
+  //when a formType and categoryId is changed (i.e when the edit button is clicked),
   //get the transaction data and map it to the form fields
   useEffect(() => {
-    const getTransaction = async () => {
-      if (formType === 'edit' && transactionId) {
+    const getCategory = async () => {
+      if (formType === "edit" && categoryId) {
         try {
-          const response = await api.get<Transaction>(`/transactions/${transactionId}`);
-          const transaction = response.data;
+          const response = await api.get<Category>(`/Categories/${categoryId}`);
+          const category = response.data;
           setFormData({
-            categoryId: transaction.categoryId,
-            amount: transaction.amount,
-            description: transaction.description,
-            transactionDate: new Date(transaction.transactionDate),
+            name: category.name,
+            type: category.type,
+            icon: category.icon,
           });
         } catch (error) {
           console.error(error);
         }
       }
     };
-    getTransaction();
-  }, [formType, transactionId]);
+    getCategory();
+  }, [formType, categoryId]);
 
   return (
     <div className="max-w-md mx-auto mt-10">
@@ -102,74 +99,55 @@ export default function TransactionForm({ onClose , formType, transactionId, cat
           </div>
         )}
         <h3 className="text-center text-lg font-bold m-4">
-          {formType === 'create'? "Create a Transaction" : "Edit a Transaction"}
+          {formType === "create" ? "Create Category" : "Edit Category"}
         </h3>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="categoryId"
+            htmlFor="name"
           >
-            Category
+            Category Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="type"
+          >
+            Type
           </label>
           <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="categoryId"
-            name="categoryId"
-            value={formData.categoryId}
+            id="type"
+            name="type"
+            value={formData.type}
             onChange={handleChange}
           >
-            {categories.map((category) => (
-              <option value={category.id} key={category.id}>
-                {category.id}) {category.name} {category.icon}
-              </option>
-            ))}
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
           </select>
         </div>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="amount"
+            htmlFor="icon"
           >
-            Amount
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="number"
-            id="amount"
-            name="amount"
-            value={formData.amount}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="description"
-          >
-            Description
+            Icon
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="transactionDate"
-          >
-            Transaction Date
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="date"
-            id="transactionDate"
-            name="transactionDate"
-            value={formData.transactionDate.toISOString().split("T")[0]}
+            id="icon"
+            name="icon"
+            value={formData.icon}
             onChange={handleChange}
           />
         </div>

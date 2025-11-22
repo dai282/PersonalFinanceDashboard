@@ -52,3 +52,60 @@ export interface CreateTransaction{
   description: string;
   transactionDate: Date;
 }
+
+export interface MonthlySummary{
+  month: number;
+  year: number;
+  totalIncome: number;
+  totalExpenses: number;
+  balance: number;
+  transactionCount: number;
+  savingsRate: number;
+}
+
+// Add these to your existing types file
+export interface SpendingByCategoryData {
+  categoryName: string;
+  categoryIcon: string;
+  amount: number;
+  percentage: number;
+}
+
+export interface SpendingByCategoryReport {
+  startDate: string;
+  endDate: string;
+  totalSpending: number;
+  categories: SpendingByCategoryData[];
+}
+
+export interface MonthlyTrendData {
+  month: number;
+  year: number;
+  monthName: string;
+  income: number;
+  expenses: number;
+  netSavings: number;
+}
+
+export interface IncomeVsExpenseTrends {
+  startDate: string;
+  endDate: string;
+  trends: MonthlyTrendData[];
+}
+
+export interface CreateBudget{
+  categoryId: number;
+  amount: number;
+  month: number;
+  year: number;
+}
+
+export interface EditBudget{
+  amount: number;
+}
+
+export interface CreateEditCategory{
+  name: string;
+  type: string;
+  icon: string;
+}

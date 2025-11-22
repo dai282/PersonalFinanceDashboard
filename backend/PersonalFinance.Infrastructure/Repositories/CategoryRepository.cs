@@ -1,7 +1,7 @@
-﻿using PersonalFinance.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalFinance.Core.Entities;
 using PersonalFinance.Core.Interfaces;
 using PersonalFinance.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

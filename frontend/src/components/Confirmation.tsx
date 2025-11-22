@@ -1,7 +1,3 @@
-import { useState, useEffect } from "react";
-import { Transaction, Category, CreateTransaction } from "../types";
-import api from "../services/api";
-
 interface ConfirmationProps{
     onConfirm: () => void;
     onCancel: () => void;
