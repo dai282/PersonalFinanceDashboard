@@ -122,17 +122,28 @@ Frontend runs on: `http://localhost:3000`
 
 ## 🎯 Project Status
 
-✅ Authentication Complete  
-🚧 Categories API (In Progress)  
-⬜ Transactions API  
-⬜ Budgets API  
-⬜ Reports API  
-⬜ Frontend Development  
+✅ Authentication  
+✅ Categories API
+✅ Transactions API  
+✅ Budgets API
+✅ Reports API
+✅ Frontend Development  
+🚧 Testing (In Progress)
 ⬜ Deployment
 
 ## 📸 Screenshots
 
-(Coming soon)
+<img width="2559" height="1277" alt="image" src="https://github.com/user-attachments/assets/0e027726-92f2-4afb-95f0-29d3358fb360" />
+
+<img width="2557" height="1278" alt="image" src="https://github.com/user-attachments/assets/ef3d4ff5-f934-4fde-8e21-af4888bc1492" />
+
+<img width="2559" height="1276" alt="image" src="https://github.com/user-attachments/assets/4b049978-cebd-473f-bc04-236500515457" />
+
+<img width="2559" height="1277" alt="image" src="https://github.com/user-attachments/assets/7328baee-fbe0-4559-bed8-333416e2e072" />
+
+
+
+
 
 ## 🧪 Testing
 
