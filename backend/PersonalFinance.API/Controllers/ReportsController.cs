@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalFinance.API.DTOs;
-using PersonalFinance.Core.Entities;
 using PersonalFinance.Core.Interfaces;
 using System.Globalization;
 using System.Security.Claims;

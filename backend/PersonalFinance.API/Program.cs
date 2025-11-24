@@ -7,8 +7,6 @@ using PersonalFinance.Infrastructure.Data;
 using PersonalFinance.Infrastructure.Repositories;
 using System.Text;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 //Aspire service defaults
@@ -31,6 +29,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers();
 //Register AuthService
 builder.Services.AddScoped<AuthService>();
+
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
