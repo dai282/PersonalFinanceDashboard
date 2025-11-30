@@ -10,7 +10,7 @@ namespace Infrastructure
         public static void Main(string[] args)
         {
             var app = new App();
-            new PersonalFinancePipelineStack(app, "InfrastructureStack", new StackProps
+            new PersonalFinancePipelineStack(app, "PersonalFinancePipelineStack", new StackProps
             {
 
                 Env = new Amazon.CDK.Environment
