@@ -18,8 +18,8 @@ namespace Infrastructure
                 }
             );
 
-            // Synth step: Build CDK application
-            var synthStep = new ShellStep("Synth", new ShellStepProps
+            // CHANGED: Use CodeBuildStep instead of ShellStep to enable Docker
+            var synthStep = new CodeBuildStep("Synth", new CodeBuildStepProps
             {
                 Input = source,
                 Commands = new[]
@@ -29,14 +29,30 @@ namespace Infrastructure
                     "dotnet build",
                     "cdk synth"
                 },
-                PrimaryOutputDirectory = "backend/infrastructure/cdk.out"
+                PrimaryOutputDirectory = "backend/infrastructure/cdk.out",
+                // CRITICAL: This enables Docker-in-Docker so CDK can build your image
+                BuildEnvironment = new Amazon.CDK.AWS.CodeBuild.BuildEnvironment
+                {
+                    Privileged = true
+                }
             });
 
             var pipeline = new CodePipeline(this, "pipeline", new CodePipelineProps
             {
                 PipelineName = "PersonalFinancePipeline",
-                Synth = synthStep
+                Synth = synthStep,
+                // Optional: Reduce cost of the pipeline execution itself
+                SelfMutation = true,
+                DockerEnabledForSynth = true
             });
+
+            // Add application stage
+            var appStage = new PersonalFinanceAppStage(this, "Production", new StageProps
+            {
+                Env = props?.Env
+            });
+
+            pipeline.AddStage(appStage);
         }
     }
 }
