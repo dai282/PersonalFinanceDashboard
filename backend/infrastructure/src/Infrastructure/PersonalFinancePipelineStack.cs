@@ -24,9 +24,18 @@ namespace Infrastructure
                 Input = source,
                 Commands = new[]
                 {
+                    // Install .NET SDK if not present
+                    "dotnet --version || (wget https://dot.net/v1/dotnet-install.sh && chmod +x dotnet-install.sh && ./dotnet-install.sh --channel 10.0)",
+        
+                    // Navigate and build
                     "cd backend/infrastructure",
                     "npm install -g aws-cdk",
+        
+                    // Restore and build the infrastructure project
+                    "dotnet restore",
                     "dotnet build",
+        
+                    // Synth CDK
                     "cdk synth"
                 },
                 PrimaryOutputDirectory = "backend/infrastructure/cdk.out",
