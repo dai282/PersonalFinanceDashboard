@@ -70,7 +70,7 @@ namespace Infrastructure
                     TaskImageOptions = new ApplicationLoadBalancedTaskImageOptions
                     {
                         // AUTOMATION: This tells CDK to look at the directory above (".."), 
-                        // find a Dockerfile, build it, and push to ECR.
+                        // find a Dockerfile, build it, and push to ECR..
                         Image = ContainerImage.FromAsset("..", new AssetImageProps
                         {
                             File = "PersonalFinance.API/Dockerfile"
