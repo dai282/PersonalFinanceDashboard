@@ -28,7 +28,8 @@ namespace Infrastructure
                     "wget https://dot.net/v1/dotnet-install.sh",
                     "chmod +x dotnet-install.sh",
                     "./dotnet-install.sh --channel 10.0 --install-dir /usr/share/dotnet",
-                    "export PATH=$PATH:/usr/share/dotnet",
+                    "export PATH=/usr/share/dotnet:$PATH",
+                    "export DOTNET_ROOT=/usr/share/dotnet",
                     "dotnet --version",
 
         
