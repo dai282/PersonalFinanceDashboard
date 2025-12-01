@@ -28,12 +28,12 @@ namespace Infrastructure
                     "dotnet --version || (wget https://dot.net/v1/dotnet-install.sh && chmod +x dotnet-install.sh && ./dotnet-install.sh --channel 10.0)",
         
                     // Navigate and build
-                    "cd backend/infrastructure",
+                    "cd backend/infrastructure/src",
                     "npm install -g aws-cdk",
         
                     // Restore and build the infrastructure project
                     "dotnet restore",
-                    "dotnet build src",
+                    "dotnet build",
         
                     // Synth CDK
                     "cdk synth"
