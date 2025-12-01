@@ -71,7 +71,7 @@ namespace Infrastructure
                     {
                         // AUTOMATION: This tells CDK to look at the directory above (".."), 
                         // find a Dockerfile, build it, and push to ECR.
-                        Image = ContainerImage.FromAsset("../../backend", new AssetImageProps
+                        Image = ContainerImage.FromAsset("..", new AssetImageProps
                         {
                             File = "PersonalFinance.API/Dockerfile"
                         }),
