@@ -73,7 +73,19 @@ namespace Infrastructure
                         // find a Dockerfile, build it, and push to ECR..
                         Image = ContainerImage.FromAsset("..", new AssetImageProps
                         {
-                            File = "PersonalFinance.API/Dockerfile"
+                            File = "PersonalFinance.API/Dockerfile",
+
+                            // CRITICAL: Prevent CDK from recursively copying its own output, 
+                            // binaries, and dependencies into the build context.
+                            Exclude = new[]
+                            {
+                                "**/cdk.out",
+                                "**/bin",
+                                "**/obj",
+                                "**/node_modules",
+                                "**/.git",
+                                "**/.vs"
+                            }
                         }),
                         ContainerPort = 8080,
                         Environment = new Dictionary<string, string>
