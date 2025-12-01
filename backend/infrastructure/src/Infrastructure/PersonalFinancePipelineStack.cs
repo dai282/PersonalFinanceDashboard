@@ -46,7 +46,7 @@ namespace Infrastructure
                     "dotnet restore",
                     "dotnet build",
 
-                    "cd backend/infrastructure",
+                    "cd ..",
         
                     // Synth CDK
                     "cdk synth"
