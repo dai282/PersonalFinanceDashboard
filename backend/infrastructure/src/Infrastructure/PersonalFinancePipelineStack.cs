@@ -31,10 +31,6 @@ namespace Infrastructure
                     "export PATH=/usr/share/dotnet:$PATH",
                     "export DOTNET_ROOT=/usr/share/dotnet",
 
-                    //remove global.json to stop it pinning to older SDK
-                    "rm -f global.json",
-                    "dotnet --version",
-
         
                     // Navigate and build
                     "cd backend/infrastructure/src",
