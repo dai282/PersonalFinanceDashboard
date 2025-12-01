@@ -33,7 +33,7 @@ namespace Infrastructure
         
                     // Restore and build the infrastructure project
                     "dotnet restore",
-                    "dotnet build",
+                    "dotnet build src",
         
                     // Synth CDK
                     "cdk synth"
