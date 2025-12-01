@@ -24,24 +24,19 @@ namespace Infrastructure
                 Input = source,
                 Commands = new[]
                 {
-                    // --- START NEW LINES ---
-                    // 1. Download the official Microsoft .NET install script
-                    "curl -L https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh",
+                    // Install .NET 10 SDK
+                    "wget https://dot.net/v1/dotnet-install.sh",
                     "chmod +x dotnet-install.sh",
-        
-                    // 2. Install .NET 10.0
-                    "./dotnet-install.sh --channel 10.0 --install-dir /root/.dotnet",
-        
-                    // 3. Add to PATH so the next commands use this version
-                    "export PATH=/root/.dotnet:$PATH",
-                    "export DOTNET_ROOT=/root/.dotnet", // Best practice: explicit root
+                    "./dotnet-install.sh --channel 10.0 --install-dir /usr/share/dotnet",
+                    "export PATH=$PATH:/usr/share/dotnet",
+                    "dotnet --version",
 
-                    "dotnet --version", // verified: should now say 10.0.100
         
                     // Navigate and build
                     "cd backend/infrastructure/src",
                     "npm install -g aws-cdk",
 
+                    "dotnet restore",
                     "dotnet build",
         
                     // Synth CDK
