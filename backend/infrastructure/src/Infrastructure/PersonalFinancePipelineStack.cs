@@ -24,8 +24,16 @@ namespace Infrastructure
                 Input = source,
                 Commands = new[]
                 {
-                    // Install .NET SDK if not present
-                    "dotnet --version || (wget https://dot.net/v1/dotnet-install.sh && chmod +x dotnet-install.sh && ./dotnet-install.sh --channel 10.0)",
+                    // --- START NEW LINES ---
+                    // 1. Download the official Microsoft .NET install script
+                    "curl -L https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh",
+                    "chmod +x dotnet-install.sh",
+        
+                    // 2. Install .NET 10.0
+                    "./dotnet-install.sh --channel 10.0 --install-dir /root/.dotnet",
+        
+                    // 3. Add to PATH so the next commands use this version
+                    "export PATH=$PATH:/root/.dotnet",
         
                     // Navigate and build
                     "cd backend/infrastructure/src",
