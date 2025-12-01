@@ -30,6 +30,8 @@ namespace Infrastructure
                     "./dotnet-install.sh --channel 10.0 --install-dir /usr/share/dotnet",
                     "export PATH=/usr/share/dotnet:$PATH",
                     "export DOTNET_ROOT=/usr/share/dotnet",
+
+                    "rm -f global.json",
                     "dotnet --version",
 
         
