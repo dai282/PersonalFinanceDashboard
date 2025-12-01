@@ -11,7 +11,7 @@ COPY ["PersonalFinance.ServiceDefaults/PersonalFinance.ServiceDefaults.csproj", 
 # Restore
 RUN dotnet restore "PersonalFinance.API/PersonalFinance.API.csproj"
 
-# Copy everything
+# Copy everything here
 COPY . .
 
 # Build

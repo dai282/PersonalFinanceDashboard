@@ -33,7 +33,10 @@ namespace Infrastructure
                     "./dotnet-install.sh --channel 10.0 --install-dir /root/.dotnet",
         
                     // 3. Add to PATH so the next commands use this version
-                    "export PATH=$PATH:/root/.dotnet",
+                    "export PATH=/root/.dotnet:$PATH",
+                    "export DOTNET_ROOT=/root/.dotnet", // Best practice: explicit root
+
+                    "dotnet --version", // verified: should now say 10.0.100
         
                     // Navigate and build
                     "cd backend/infrastructure/src",
