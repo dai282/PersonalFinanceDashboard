@@ -31,7 +31,14 @@ namespace Infrastructure
                     "export PATH=/usr/share/dotnet:$PATH",
                     "export DOTNET_ROOT=/usr/share/dotnet",
 
-        
+                    // The error log showed it is at /codebuild/global.json
+                    "rm -f /codebuild/global.json",
+                    // Also remove it from current dir just in case
+                    "rm -f global.json", 
+
+                        // 4. Verify version (Should now succeed)
+                    "dotnet --version",
+
                     // Navigate and build
                     "cd backend/infrastructure/src",
                     "npm install -g aws-cdk",
