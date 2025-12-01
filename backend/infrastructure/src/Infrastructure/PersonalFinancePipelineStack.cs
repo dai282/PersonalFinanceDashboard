@@ -38,9 +38,7 @@ namespace Infrastructure
                     // Navigate and build
                     "cd backend/infrastructure/src",
                     "npm install -g aws-cdk",
-        
-                    // Restore and build the infrastructure project
-                    "dotnet restore",
+
                     "dotnet build",
         
                     // Synth CDK
