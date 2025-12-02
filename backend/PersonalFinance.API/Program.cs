@@ -191,6 +191,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+app.MapGet("/health", () => Results.Ok("Healthy"));
 
 app.Run();
