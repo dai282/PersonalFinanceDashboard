@@ -102,6 +102,14 @@ namespace Infrastructure
                     PublicLoadBalancer = true
                 });
 
+            // --- ADD THIS BLOCK ---
+            // Tell the Load Balancer to check '/health' instead of '/'
+            fargateService.TargetGroup.ConfigureHealthCheck(new Amazon.CDK.AWS.ElasticLoadBalancingV2.HealthCheck
+            {
+                Path = "/health",
+                HealthyHttpCodes = "200" // Expect a 200 OK response
+            });
+
             // Allow service to connect to database
             dbInstance.Connections.AllowDefaultPortFrom(fargateService.Service);
 
