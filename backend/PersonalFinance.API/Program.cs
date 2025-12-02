@@ -117,8 +117,15 @@ builder.Services.AddCors(options =>
         policy.SetIsOriginAllowed(origin =>
         {
             if (string.IsNullOrWhiteSpace(origin)) return false;
+
+            //allow localhost for development
             if (origin.StartsWith("http://localhost") || origin.StartsWith("https://localhost"))
                 return true;
+
+            // Allow Vercel deployment
+            if (origin.EndsWith(".vercel.app"))
+                return true;
+                
             return false;
         })
         .AllowAnyHeader()
