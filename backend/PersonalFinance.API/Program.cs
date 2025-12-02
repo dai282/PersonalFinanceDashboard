@@ -149,32 +149,33 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<ApplicationDbContext>();
 
         // Wait for database to be ready
-        var maxAttempts = 10;
-        var delay = TimeSpan.FromSeconds(3);
+        //var maxAttempts = 10;
+        //var delay = TimeSpan.FromSeconds(3);
 
-        for (int i = 0; i < maxAttempts; i++)
-        {
-            try
-            {
-                logger.LogInformation("Attempting to connect to database... (Attempt {Attempt}/{MaxAttempts})", i + 1, maxAttempts);
-                await context.Database.CanConnectAsync();
-                logger.LogInformation("Database connection successful!");
-                break;
-            }
-            catch (Exception ex)
-            {
-                if (i == maxAttempts - 1)
-                {
-                    logger.LogError(ex, "Failed to connect to database after {MaxAttempts} attempts", maxAttempts);
-                    throw;
-                }
-                logger.LogWarning("Database not ready, waiting {Delay} seconds...", delay.TotalSeconds);
-                await Task.Delay(delay);
-            }
-        }
+        //for (int i = 0; i < maxAttempts; i++)
+        //{
+        //    try
+        //    {
+        //        logger.LogInformation("Attempting to connect to database... (Attempt {Attempt}/{MaxAttempts})", i + 1, maxAttempts);
+        //        await context.Database.CanConnectAsync();
+        //        logger.LogInformation("Database connection successful!");
+        //        break;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (i == maxAttempts - 1)
+        //        {
+        //            logger.LogError(ex, "Failed to connect to database after {MaxAttempts} attempts", maxAttempts);
+        //            throw;
+        //        }
+        //        logger.LogWarning("Database not ready, waiting {Delay} seconds...", delay.TotalSeconds);
+        //        await Task.Delay(delay);
+        //    }
+        //}
 
         // Run migrations automatically
         logger.LogInformation("Running database migrations...");
+        // This will create the database if it doesn't exist
         await context.Database.MigrateAsync();
 
         // Seed data

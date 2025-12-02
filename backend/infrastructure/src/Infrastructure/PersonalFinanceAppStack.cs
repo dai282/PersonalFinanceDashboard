@@ -46,7 +46,7 @@ namespace Infrastructure
                 //PRIVATE_ISOLATED because we have no NAT Gateway
                 VpcSubnets = new SubnetSelection { SubnetType = SubnetType.PRIVATE_ISOLATED },
                 AllocatedStorage = 20,
-                DatabaseName = "PersonalFinanceDB",
+                //DatabaseName = "PersonalFinanceDB",
                 Credentials = Credentials.FromGeneratedSecret("admin"),
             });
 
