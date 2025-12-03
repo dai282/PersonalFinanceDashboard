@@ -14,7 +14,7 @@ using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Aspire service defaults
+//Aspire service defaults.
 builder.AddServiceDefaults();
 
 // --- START INSERT: AWS Secrets Manager Logic ---
