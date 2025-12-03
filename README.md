@@ -2,7 +2,7 @@
 
 A full-stack web application for tracking personal finances, budgets, and expenses.
 
-## 🚀 Features
+## ⭐ Features
 
 - Track income and expenses
 - Budget management
@@ -13,37 +13,27 @@ A full-stack web application for tracking personal finances, budgets, and expens
 
 - **Backend:** ASP.NET Core Web API, Entity Framework Core, SQL Server
 - **Frontend:** React, TypeScript, Tailwind CSS
-- **Deployment:** Azure, Vercel
+- **Deployment:** AWS, Vercel
+
+## 🏗️ Architecture
+
+- **Frontend:** React + TypeScript deployed on Vercel
+- **Backend:** .NET 10 Web API on AWS ECS Fargate
+- **Database:** AWS RDS SQL Server Express
+- **CI/CD:** AWS CDK Pipeline (GitHub → CodeBuild → ECS)
+
+## 🚀 Live Deployment
+
+- **Frontend:** https://personal-finance-dashboard-m0ifpt8mf-dais-projects-9ac44d04.vercel.app
+- **Backend API:** http://Produc-Perso-XpadNxlVuITz-2140983474.ap-southeast-2.elb.amazonaws.com/api
 
 ## 📦 Getting Started
 
 ### Prerequisites
 
-- .NET 8.0 SDK
+- .NET 10.0 SDK
 - Node.js 18+
 - SQL Server or LocalDB
-
-### Backend Setup
-
-```bash
-cd backend
-dotnet restore
-dotnet ef database update --project PersonalFinance.Infrastructure --startup-project PersonalFinance.API
-cd PersonalFinance.API
-dotnet run
-```
-
-Backend runs on: `https://localhost:5151`
-
-### Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm start
-```
-
-Frontend runs on: `http://localhost:3000`
 
 ## 🔌 API Endpoints
 
@@ -128,8 +118,8 @@ Frontend runs on: `http://localhost:3000`
 ✅ Budgets API
 ✅ Reports API
 ✅ Frontend Development  
-🚧 Testing (In Progress)
-⬜ Deployment
+✅ Testing (In Progress)
+✅ Deployment
 
 ## 📸 Screenshots
 
