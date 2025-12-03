@@ -71,7 +71,7 @@ export default function BudgetList({}: budgetListProps) {
     });
   }
 
-  //Reload budget list when filters change
+  //Reload budget list when filters change.
   useEffect(() => {
     const getBudgets = async () => {
       try {
