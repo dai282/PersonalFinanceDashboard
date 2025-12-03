@@ -125,13 +125,21 @@ builder.Services.AddCors(options =>
             // Allow Vercel deployment
             if (origin.EndsWith(".vercel.app"))
                 return true;
-                
+
             return false;
         })
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
     });
+
+    options.AddPolicy("AllowVercel", policy =>
+    {
+        policy.WithOrigins("https://personal-finance-dashboard-bjk7f7iv3-dais-projects-9ac44d04.vercel.app") // Your Vercel Domain
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+
 });
 
 var app = builder.Build();
@@ -140,6 +148,7 @@ var app = builder.Build();
 app.MapDefaultEndpoints();
 
 app.UseCors("AllowFrontend");
+app.UseCors("AllowVercel");
 app.UseAuthentication();
 app.UseAuthorization();
 
