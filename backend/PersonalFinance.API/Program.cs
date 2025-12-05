@@ -164,7 +164,7 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
 
-        // Wait for database to be ready
+        // Wait for database to be ready.
         //var maxAttempts = 10;
         //var delay = TimeSpan.FromSeconds(3);
 
