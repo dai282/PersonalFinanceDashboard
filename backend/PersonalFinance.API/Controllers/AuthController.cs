@@ -1,85 +1,87 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PersonalFinance.API.DTOs;
-using PersonalFinance.API.Services;
-using PersonalFinance.Core.Entities;
-using PersonalFinance.Infrastructure.Data;
+﻿//not needed now using Auth0
 
-namespace PersonalFinance.API.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
-    {
-        private readonly ApplicationDbContext _context;
-        private readonly AuthService _authService;
+// using Microsoft.AspNetCore.Mvc;
+// using Microsoft.EntityFrameworkCore;
+// using PersonalFinance.API.DTOs;
+// using PersonalFinance.API.Services;
+// using PersonalFinance.Core.Entities;
+// using PersonalFinance.Infrastructure.Data;
 
-        public AuthController(ApplicationDbContext context, AuthService authService)
-        {
-            _context = context;
-            _authService = authService;
-        }
+// namespace PersonalFinance.API.Controllers
+// {
+//     [Route("api/[controller]")]
+//     [ApiController]
+//     public class AuthController : ControllerBase
+//     {
+//         private readonly ApplicationDbContext _context;
+//         private readonly AuthService _authService;
 
-        [HttpPost("register")]
-        public async Task<ActionResult<AuthResponseDto>> Register(RegisterDto dto)
-        {
-            // Check if user exists
-            if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
-            {
-                return BadRequest("User already exists");
-            }
+//         public AuthController(ApplicationDbContext context, AuthService authService)
+//         {
+//             _context = context;
+//             _authService = authService;
+//         }
 
-            // Create new user
-            var user = new User
-            {
-                Email = dto.Email,
-                PasswordHash = _authService.HashPassword(dto.Password),
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                CreatedAt = DateTime.UtcNow
-            };
+//         [HttpPost("register")]
+//         public async Task<ActionResult<AuthResponseDto>> Register(RegisterDto dto)
+//         {
+//             // Check if user exists
+//             if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
+//             {
+//                 return BadRequest("User already exists");
+//             }
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+//             // Create new user
+//             var user = new User
+//             {
+//                 Email = dto.Email,
+//                 PasswordHash = _authService.HashPassword(dto.Password),
+//                 FirstName = dto.FirstName,
+//                 LastName = dto.LastName,
+//                 CreatedAt = DateTime.UtcNow
+//             };
 
-            // Generate token
-            var token = _authService.GenerateJwtToken(user);
+//             _context.Users.Add(user);
+//             await _context.SaveChangesAsync();
 
-            return Ok(new AuthResponseDto
-            {
-                Token = token,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName
-            });
-        }
+//             // Generate token
+//             var token = _authService.GenerateJwtToken(user);
 
-        [HttpPost("login")]
-        public async Task<ActionResult<AuthResponseDto>> Login(LoginDto dto)
-        {
-            // Find user
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
-            if (user == null)
-            {
-                return Unauthorized("Invalid credentials");
-            }
+//             return Ok(new AuthResponseDto
+//             {
+//                 Token = token,
+//                 Email = user.Email,
+//                 FirstName = user.FirstName,
+//                 LastName = user.LastName
+//             });
+//         }
 
-            // Verify password
-            if (!_authService.VerifyPassword(dto.Password, user.PasswordHash))
-            {
-                return Unauthorized("Invalid credentials");
-            }
+//         [HttpPost("login")]
+//         public async Task<ActionResult<AuthResponseDto>> Login(LoginDto dto)
+//         {
+//             // Find user
+//             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+//             if (user == null)
+//             {
+//                 return Unauthorized("Invalid credentials");
+//             }
 
-            // Generate token
-            var token = _authService.GenerateJwtToken(user);
+//             // Verify password
+//             if (!_authService.VerifyPassword(dto.Password, user.PasswordHash))
+//             {
+//                 return Unauthorized("Invalid credentials");
+//             }
 
-            return Ok(new AuthResponseDto
-            {
-                Token = token,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName
-            });
-        }
-    }
-}
+//             // Generate token
+//             var token = _authService.GenerateJwtToken(user);
+
+//             return Ok(new AuthResponseDto
+//             {
+//                 Token = token,
+//                 Email = user.Email,
+//                 FirstName = user.FirstName,
+//                 LastName = user.LastName
+//             });
+//         }
+//     }
+// }

@@ -3,7 +3,7 @@ using Amazon.SecretsManager.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using PersonalFinance.API.Services;
+//using PersonalFinance.API.Services;
 using PersonalFinance.Core.Interfaces;
 using PersonalFinance.Infrastructure.Data;
 using PersonalFinance.Infrastructure.Repositories;
@@ -80,7 +80,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddControllers();
 //Register AuthService
-builder.Services.AddScoped<AuthService>();
+//remove auth service now that we're using Auth0
+//builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
@@ -95,16 +96,30 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
+    // Use Auth0 domain and audience from configuration (appsettings or env vars)
+    var domain = builder.Configuration["Auth0:Domain"];
+    var audience = builder.Configuration["Auth0:Audience"];
+
+    options.Authority = $"https://{domain}/";
+    // Validate audience and issuer
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings["Issuer"],
-        ValidAudience = jwtSettings["Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]!))
+        ValidAudience = audience,
+        ValidateLifetime = true
     };
+
+    // options.TokenValidationParameters = new TokenValidationParameters
+    // {
+    //     ValidateIssuer = true,
+    //     ValidateAudience = true,
+    //     ValidateLifetime = true,
+    //     ValidateIssuerSigningKey = true,
+    //     ValidIssuer = jwtSettings["Issuer"],
+    //     ValidAudience = jwtSettings["Audience"],
+    //     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]!))
+    // };
 });
 
 builder.Services.AddAuthorization();
