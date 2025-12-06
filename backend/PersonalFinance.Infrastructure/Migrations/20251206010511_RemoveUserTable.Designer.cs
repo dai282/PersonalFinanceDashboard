@@ -12,8 +12,8 @@ using PersonalFinance.Infrastructure.Data;
 namespace PersonalFinance.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251205235323_ConvertUserIdToString")]
-    partial class ConvertUserIdToString
+    [Migration("20251206010511_RemoveUserTable")]
+    partial class RemoveUserTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,10 +50,7 @@ namespace PersonalFinance.Infrastructure.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("UserId1")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -61,11 +58,6 @@ namespace PersonalFinance.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("UserId1");
-
-                    b.HasIndex("UserId", "CategoryId", "Month", "Year")
-                        .IsUnique();
 
                     b.ToTable("Budgets");
                 });
@@ -95,12 +87,7 @@ namespace PersonalFinance.Infrastructure.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Categories");
                 });
@@ -139,51 +126,11 @@ namespace PersonalFinance.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("UserId1");
-
                     b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("PersonalFinance.Core.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("PersonalFinance.Core.Entities.Budget", b =>
@@ -194,24 +141,7 @@ namespace PersonalFinance.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PersonalFinance.Core.Entities.User", "User")
-                        .WithMany("Budgets")
-                        .HasForeignKey("UserId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PersonalFinance.Core.Entities.Category", b =>
-                {
-                    b.HasOne("PersonalFinance.Core.Entities.User", "User")
-                        .WithMany("Categories")
-                        .HasForeignKey("UserId1");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PersonalFinance.Core.Entities.Transaction", b =>
@@ -222,29 +152,12 @@ namespace PersonalFinance.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PersonalFinance.Core.Entities.User", "User")
-                        .WithMany("Transactions")
-                        .HasForeignKey("UserId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PersonalFinance.Core.Entities.Category", b =>
                 {
                     b.Navigation("Budgets");
-
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("PersonalFinance.Core.Entities.User", b =>
-                {
-                    b.Navigation("Budgets");
-
-                    b.Navigation("Categories");
 
                     b.Navigation("Transactions");
                 });

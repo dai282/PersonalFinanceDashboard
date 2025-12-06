@@ -47,3 +47,4 @@
 //     return !!localStorage.getItem('token');
 //   },
 // };
+export {};

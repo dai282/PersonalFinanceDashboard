@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace PersonalFinance.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class ConvertUserIdToString : Migration
+    public partial class RemoveUserTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,6 +23,9 @@ namespace PersonalFinance.Infrastructure.Migrations
                 name: "FK_Transactions_Users_UserId",
                 table: "Transactions");
 
+            migrationBuilder.DropTable(
+                name: "Users");
+
             migrationBuilder.DropIndex(
                 name: "IX_Transactions_UserId",
                 table: "Transactions");
@@ -30,6 +34,10 @@ namespace PersonalFinance.Infrastructure.Migrations
                 name: "IX_Categories_UserId",
                 table: "Categories");
 
+            migrationBuilder.DropIndex(
+                name: "IX_Budgets_UserId_CategoryId_Month_Year",
+                table: "Budgets");
+
             migrationBuilder.AlterColumn<string>(
                 name: "UserId",
                 table: "Transactions",
@@ -37,13 +45,6 @@ namespace PersonalFinance.Infrastructure.Migrations
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int");
-
-            migrationBuilder.AddColumn<int>(
-                name: "UserId1",
-                table: "Transactions",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
 
             migrationBuilder.AlterColumn<string>(
                 name: "UserId",
@@ -54,105 +55,18 @@ namespace PersonalFinance.Infrastructure.Migrations
                 oldType: "int",
                 oldNullable: true);
 
-            migrationBuilder.AddColumn<int>(
-                name: "UserId1",
-                table: "Categories",
-                type: "int",
-                nullable: true);
-
             migrationBuilder.AlterColumn<string>(
                 name: "UserId",
                 table: "Budgets",
-                type: "nvarchar(450)",
+                type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int");
-
-            migrationBuilder.AddColumn<int>(
-                name: "UserId1",
-                table: "Budgets",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transactions_UserId1",
-                table: "Transactions",
-                column: "UserId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Categories_UserId1",
-                table: "Categories",
-                column: "UserId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Budgets_UserId1",
-                table: "Budgets",
-                column: "UserId1");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Budgets_Users_UserId1",
-                table: "Budgets",
-                column: "UserId1",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Categories_Users_UserId1",
-                table: "Categories",
-                column: "UserId1",
-                principalTable: "Users",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Transactions_Users_UserId1",
-                table: "Transactions",
-                column: "UserId1",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Budgets_Users_UserId1",
-                table: "Budgets");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Categories_Users_UserId1",
-                table: "Categories");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Transactions_Users_UserId1",
-                table: "Transactions");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Transactions_UserId1",
-                table: "Transactions");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Categories_UserId1",
-                table: "Categories");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Budgets_UserId1",
-                table: "Budgets");
-
-            migrationBuilder.DropColumn(
-                name: "UserId1",
-                table: "Transactions");
-
-            migrationBuilder.DropColumn(
-                name: "UserId1",
-                table: "Categories");
-
-            migrationBuilder.DropColumn(
-                name: "UserId1",
-                table: "Budgets");
-
             migrationBuilder.AlterColumn<int>(
                 name: "UserId",
                 table: "Transactions",
@@ -176,7 +90,24 @@ namespace PersonalFinance.Infrastructure.Migrations
                 type: "int",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(450)");
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_UserId",
@@ -187,6 +118,18 @@ namespace PersonalFinance.Infrastructure.Migrations
                 name: "IX_Categories_UserId",
                 table: "Categories",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Budgets_UserId_CategoryId_Month_Year",
+                table: "Budgets",
+                columns: new[] { "UserId", "CategoryId", "Month", "Year" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Budgets_Users_UserId",

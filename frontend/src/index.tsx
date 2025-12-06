@@ -15,7 +15,8 @@ root.render(
       clientId={process.env.REACT_APP_AUTH0_CLIENT_ID!}
       authorizationParams={{
         redirect_uri: window.location.origin,
-        audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+        //Remove audience if you're only doing authentication (not API access)
+        //audience: process.env.REACT_APP_AUTH0_AUDIENCE,
       }}
     >
       <App />

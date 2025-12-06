@@ -15,7 +15,7 @@ namespace PersonalFinance.Infrastructure.Data
         {
         }
 
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Budget> Budgets { get; set; }
@@ -25,14 +25,14 @@ namespace PersonalFinance.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             // User configurations
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
+            // modelBuilder.Entity<User>()
+            //     .HasIndex(u => u.Email)
+            //     .IsUnique();
 
             // Budget unique constraint
-            modelBuilder.Entity<Budget>()
-                .HasIndex(b => new { b.UserId, b.CategoryId, b.Month, b.Year })
-                .IsUnique();
+            // modelBuilder.Entity<Budget>()
+            //     .HasIndex(b => new { b.UserId, b.CategoryId, b.Month, b.Year })
+            //     .IsUnique();
 
             // Decimal precision
             modelBuilder.Entity<Transaction>()
