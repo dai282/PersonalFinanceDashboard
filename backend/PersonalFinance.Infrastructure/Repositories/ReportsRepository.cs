@@ -14,7 +14,7 @@ namespace PersonalFinance.Infrastructure.Repositories
         }
 
         public async Task<(decimal TotalIncome, decimal TotalExpenses, decimal Balance, int TransactionCount)> GetMonthlySummaryAsync(
-            int userId, int month, int year)
+            string userId, int month, int year)
         {
             var startDate = new DateTime(year, month, 1);
             var endDate = startDate.AddMonths(1).AddDays(-1);
@@ -40,7 +40,7 @@ namespace PersonalFinance.Infrastructure.Repositories
         }
 
         public async Task<IEnumerable<(string CategoryName, string CategoryIcon, decimal Amount, decimal Percentage)>> GetSpendingByCategoryAsync(
-            int userId, DateTime startDate, DateTime endDate)
+            string userId, DateTime startDate, DateTime endDate)
         {
             var expenses = await _context.Transactions
                 .Include(t => t.Category)
@@ -71,7 +71,7 @@ namespace PersonalFinance.Infrastructure.Repositories
         }
 
         public async Task<IEnumerable<(int Month, int Year, decimal Income, decimal Expenses)>> GetIncomeVsExpenseTrendsAsync(
-            int userId, DateTime startDate, DateTime endDate)
+            string userId, DateTime startDate, DateTime endDate)
         {
             var transactions = await _context.Transactions
                 .Where(t => t.UserId == userId

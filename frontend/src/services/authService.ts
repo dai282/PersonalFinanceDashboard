@@ -1,46 +1,49 @@
-import api from './api';
 
-export interface RegisterData {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-}
+//now using auth0
 
-export interface LoginData {
-  email: string;
-  password: string;
-}
+// import api from './api';
 
-export interface AuthResponse {
-  token: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-}
+// export interface RegisterData {
+//   email: string;
+//   password: string;
+//   firstName: string;
+//   lastName: string;
+// }
 
-export const authService = {
-  register: async (data: RegisterData): Promise<AuthResponse> => {
-    const response = await api.post<AuthResponse>('/auth/register', data);
-    return response.data;
-  },
+// export interface LoginData {
+//   email: string;
+//   password: string;
+// }
 
-  login: async (data: LoginData): Promise<AuthResponse> => {
-    const response = await api.post<AuthResponse>('/auth/login', data);
-    return response.data;
-  },
+// export interface AuthResponse {
+//   token: string;
+//   email: string;
+//   firstName: string;
+//   lastName: string;
+// }
 
-  logout: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-  },
+// export const authService = {
+//   register: async (data: RegisterData): Promise<AuthResponse> => {
+//     const response = await api.post<AuthResponse>('/auth/register', data);
+//     return response.data;
+//   },
 
-  getCurrentUser: (): AuthResponse | null => {
-    const userStr = localStorage.getItem('user');
-    return userStr ? JSON.parse(userStr) : null;
-  },
+//   login: async (data: LoginData): Promise<AuthResponse> => {
+//     const response = await api.post<AuthResponse>('/auth/login', data);
+//     return response.data;
+//   },
 
-  isAuthenticated: (): boolean => {
-    return !!localStorage.getItem('token');
-  },
-};
+//   logout: () => {
+//     localStorage.removeItem('token');
+//     localStorage.removeItem('user');
+//   },
+
+//   getCurrentUser: (): AuthResponse | null => {
+//     const userStr = localStorage.getItem('user');
+//     return userStr ? JSON.parse(userStr) : null;
+//   },
+
+//   isAuthenticated: (): boolean => {
+//     return !!localStorage.getItem('token');
+//   },
+// };

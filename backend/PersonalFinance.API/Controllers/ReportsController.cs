@@ -20,10 +20,10 @@ namespace PersonalFinance.API.Controllers
             _reportsRepository = reportsRepository;
         }
 
-        private int GetUserId()
+        private string GetUserId()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return int.Parse(userIdClaim!);
+            return userIdClaim ?? throw new UnauthorizedAccessException();
         }
 
         [HttpGet("monthly-summary")]

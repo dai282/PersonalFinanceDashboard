@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+//import { useAuth } from '../contexts/AuthContext';
+import LogoutButton from '../pages/LogoutButton';
+import Profile from '../pages/Profile';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -8,14 +11,17 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const { user, logout } = useAuth();
+  //const { user, logout } = useAuth();
+  const { user, isAuthenticated } = useAuth0();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
+  // const handleLogout = () => {
+  //   logout();
+  //   navigate('/login');
+  // };
+
+
 
   const navItems = [
     { path: '/dashboard', label: 'Dashboard', icon: '📊' },
@@ -74,26 +80,38 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
         {/* User Section */}
         <div className="p-4 border-t">
-          <div className="flex items-center">
-            <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
-              {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
-            </div>
-            {isSidebarOpen && (
-              <div className="ml-3 flex-1">
-                <p className="text-sm font-medium text-gray-700">
-                  {user?.firstName} {user?.lastName}
-                </p>
-                <p className="text-xs text-gray-500">{user?.email}</p>
+          {/* Auth0 profile */}
+          {isAuthenticated && user && (
+            <>
+              <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                {user.name?.charAt(0) || user.email?.charAt(0)}
               </div>
-            )}
-          </div>
-          {isSidebarOpen && (
-            <button
-              onClick={handleLogout}
-              className="mt-3 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-            >
-              Logout
-            </button>
+
+              {isSidebarOpen && <Profile />}
+
+              {isSidebarOpen && <LogoutButton/>}
+              {/* <div className="flex items-center">
+                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                  {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
+                </div>
+                {isSidebarOpen && (
+                  <div className="ml-3 flex-1">
+                    <p className="text-sm font-medium text-gray-700">
+                      {user?.firstName} {user?.lastName}
+                    </p>
+                    <p className="text-xs text-gray-500">{user?.email}</p>
+                  </div>
+                )}
+              </div> */}
+              {/* {isSidebarOpen && (
+                <button
+                  onClick={handleLogout}
+                  className="mt-3 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                >
+                  Logout
+                </button>
+              )} */}
+            </>
           )}
         </div>
       </aside>

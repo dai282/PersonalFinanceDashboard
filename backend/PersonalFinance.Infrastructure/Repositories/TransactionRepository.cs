@@ -15,7 +15,7 @@ namespace PersonalFinance.Infrastructure.Repositories
         }
 
         public async Task<(IEnumerable<Transaction> Transactions, int TotalCount)> GetAllAsync(
-            int userId,
+            string userId,
             int pageNumber,
             int pageSize,
             int? categoryId = null,
@@ -47,7 +47,7 @@ namespace PersonalFinance.Infrastructure.Repositories
             return (transactions, totalCount);
         }
 
-        public async Task<Transaction?> GetByIdAsync(int id, int userId)
+        public async Task<Transaction?> GetByIdAsync(int id, string userId)
         {
             return await _context.Transactions
                 .Include(t => t.Category)
@@ -73,7 +73,7 @@ namespace PersonalFinance.Infrastructure.Repositories
             return transaction;
         }
 
-        public async Task<bool> DeleteAsync(int id, int userId)
+        public async Task<bool> DeleteAsync(int id, string userId)
         {
             var transaction = await _context.Transactions
                 .FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
@@ -87,7 +87,7 @@ namespace PersonalFinance.Infrastructure.Repositories
         }
 
         public async Task<(decimal TotalIncome, decimal TotalExpenses, decimal Balance)> GetStatisticsAsync(
-            int userId,
+            string userId,
             DateTime? startDate = null,
             DateTime? endDate = null)
         {

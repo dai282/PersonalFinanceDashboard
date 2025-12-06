@@ -22,7 +22,7 @@ namespace PersonalFinance.Infrastructure.Repositories
         }
 
         //override methods from interface
-        public async Task<IEnumerable<Category>> GetAllAsync(int? userId)
+        public async Task<IEnumerable<Category>> GetAllAsync(string? userId)
         {
             // Get default categories (UserId == null) and user's custom categories
             return await _context.Categories

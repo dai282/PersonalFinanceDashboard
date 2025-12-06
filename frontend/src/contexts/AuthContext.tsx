@@ -1,82 +1,84 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
-import { authService, AuthResponse } from "../services/authService";
+//now using auth0
 
-interface AuthContextType {
-  user: AuthResponse | null;
-  login: (email: string, password: string) => Promise<void>;
-  register: (
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string
-  ) => Promise<void>;
-  logout: () => void;
-  isLoading: boolean;
-}
+// import React, {
+//   createContext,
+//   useContext,
+//   useState,
+//   useEffect,
+//   ReactNode,
+// } from "react";
+// import { authService, AuthResponse } from "../services/authService";
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// interface AuthContextType {
+//   user: AuthResponse | null;
+//   login: (email: string, password: string) => Promise<void>;
+//   register: (
+//     email: string,
+//     password: string,
+//     firstName: string,
+//     lastName: string
+//   ) => Promise<void>;
+//   logout: () => void;
+//   isLoading: boolean;
+// }
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
-  const [user, setUser] = useState<AuthResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+// const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-  useEffect(() => {
-    // Check if user is already logged in
-    const currentUser = authService.getCurrentUser();
-    if (currentUser) {
-      setUser(currentUser);
-    }
-    setIsLoading(false);
-  }, []);
+// export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+//   children,
+// }) => {
+//   const [user, setUser] = useState<AuthResponse | null>(null);
+//   const [isLoading, setIsLoading] = useState(true);
 
-  const login = async (email: string, password: string) => {
-    const response = await authService.login({ email, password });
-    localStorage.setItem("token", response.token);
-    localStorage.setItem("user", JSON.stringify(response));
-    setUser(response);
-  };
+//   useEffect(() => {
+//     // Check if user is already logged in
+//     const currentUser = authService.getCurrentUser();
+//     if (currentUser) {
+//       setUser(currentUser);
+//     }
+//     setIsLoading(false);
+//   }, []);
 
-  const register = async (
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string
-  ) => {
-    const response = await authService.register({
-      email,
-      password,
-      firstName,
-      lastName,
-    });
-    localStorage.setItem("token", response.token);
-    localStorage.setItem("user", JSON.stringify(response));
-    setUser(response);
-  };
+//   const login = async (email: string, password: string) => {
+//     const response = await authService.login({ email, password });
+//     localStorage.setItem("token", response.token);
+//     localStorage.setItem("user", JSON.stringify(response));
+//     setUser(response);
+//   };
 
-  const logout = () => {
-    authService.logout();
-    setUser(null);
-  };
+//   const register = async (
+//     email: string,
+//     password: string,
+//     firstName: string,
+//     lastName: string
+//   ) => {
+//     const response = await authService.register({
+//       email,
+//       password,
+//       firstName,
+//       lastName,
+//     });
+//     localStorage.setItem("token", response.token);
+//     localStorage.setItem("user", JSON.stringify(response));
+//     setUser(response);
+//   };
 
-  return (
-    <AuthContext.Provider value={{ user, login, register, logout, isLoading }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+//   const logout = () => {
+//     authService.logout();
+//     setUser(null);
+//   };
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};
+//   return (
+//     <AuthContext.Provider value={{ user, login, register, logout, isLoading }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };
+
+// export const useAuth = () => {
+//   const context = useContext(AuthContext);
+//   if (context === undefined) {
+//     throw new Error("useAuth must be used within an AuthProvider");
+//   }
+//   return context;
+// };

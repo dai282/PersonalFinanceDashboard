@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using PersonalFinance.Core.Interfaces;
 using PersonalFinance.Infrastructure.Data;
 using PersonalFinance.Infrastructure.Repositories;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 
@@ -20,7 +21,7 @@ builder.AddServiceDefaults();
 // --- START INSERT: AWS Secrets Manager Logic ---
 
 // 1. Get the Default connection string (Local/Aspire)
-string connectionString = builder.Configuration.GetConnectionString("PersonalFinanceDB");
+string connectionString = builder.Configuration.GetConnectionString("PersonalFinanceDB")!;
 
 // 2. Check if we are running in AWS (The CDK passes these variables)
 var dbSecretArn = Environment.GetEnvironmentVariable("DB_SECRET_ARN");
@@ -107,7 +108,8 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidAudience = audience,
-        ValidateLifetime = true
+        ValidateLifetime = true,
+        NameClaimType = ClaimTypes.NameIdentifier
     };
 
     // options.TokenValidationParameters = new TokenValidationParameters

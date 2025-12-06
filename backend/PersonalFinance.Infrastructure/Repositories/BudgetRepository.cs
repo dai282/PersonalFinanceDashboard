@@ -15,7 +15,7 @@ namespace PersonalFinance.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Budget>> GetAllAsync(int userId, int? month = null, int? year = null)
+        public async Task<IEnumerable<Budget>> GetAllAsync(string userId, int? month = null, int? year = null)
         {
             var query = _context.Budgets
                 .Include(b => b.Category)
@@ -30,7 +30,7 @@ namespace PersonalFinance.Infrastructure.Repositories
             return await query.OrderBy(b => b.Category.Name).ToListAsync();
         }
 
-        public async Task<Budget?> GetByIdAsync(int id, int userId)
+        public async Task<Budget?> GetByIdAsync(int id, string userId)
         {
             return await _context.Budgets
                 .Include(b => b.Category)
@@ -55,7 +55,7 @@ namespace PersonalFinance.Infrastructure.Repositories
             return budget;
         }
 
-        public async Task<bool> DeleteAsync(int id, int userId)
+        public async Task<bool> DeleteAsync(int id, string userId)
         {
             var budget = await _context.Budgets
                 .FirstOrDefaultAsync(b => b.Id == id && b.UserId == userId);
@@ -68,7 +68,7 @@ namespace PersonalFinance.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<decimal> GetActualSpendingAsync(int userId, int categoryId, int month, int year)
+        public async Task<decimal> GetActualSpendingAsync(string userId, int categoryId, int month, int year)
         {
             var startDate = new DateTime(year, month, 1);
             var endDate = startDate.AddMonths(1).AddDays(-1);

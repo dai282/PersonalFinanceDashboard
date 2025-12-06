@@ -3,7 +3,7 @@
     public class Budget
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }  = string.Empty;
         public int CategoryId { get; set; }
         public decimal Amount { get; set; }
         public int Month { get; set; } // 1-12
@@ -12,7 +12,7 @@
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation properties
-        public User User { get; set; } = null!;
+        //public User User { get; set; } = null!;
         public Category Category { get; set; } = null!;
     }
 }

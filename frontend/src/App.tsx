@@ -1,5 +1,5 @@
 import "./App.css";
-import { AuthProvider } from "./contexts/AuthContext";
+//import { AuthProvider } from "./contexts/AuthContext";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,8 +7,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import Layout from "./components/Layout";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+//import Login from "./pages/Login";
+//import Register from "./pages/Register";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Transactions from "./pages/transactions/Transactions";
 import Budgets from "./pages/budget/Budgets";
@@ -17,11 +17,12 @@ import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
-    <AuthProvider>
+    //using Auth0 provider
+    // <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          {/* <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} /> */}
           <Route
             path="/dashboard"
             element={
@@ -65,7 +66,7 @@ function App() {
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </Router>
-    </AuthProvider>
+    //</AuthProvider>
   );
 }
 

@@ -1,8 +1,11 @@
-﻿namespace PersonalFinance.API.DTOs
-{
-    public class LoginDto
-    {
-        public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
-    }
-}
+﻿//now using auth0
+
+
+// namespace PersonalFinance.API.DTOs
+// {
+//     public class LoginDto
+//     {
+//         public string Email { get; set; } = string.Empty;
+//         public string Password { get; set; } = string.Empty;
+//     }
+// }

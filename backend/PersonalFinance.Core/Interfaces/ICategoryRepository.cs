@@ -9,7 +9,7 @@ namespace PersonalFinance.Core.Interfaces
 {
     public interface ICategoryRepository
     {
-        Task<IEnumerable<Category>> GetAllAsync(int? userId);
+        Task<IEnumerable<Category>> GetAllAsync(string? userId);
         Task<Category?> GetByIdAsync(int id);
         Task<Category> CreateAsync(Category category);
         Task<Category?> UpdateAsync(Category category);

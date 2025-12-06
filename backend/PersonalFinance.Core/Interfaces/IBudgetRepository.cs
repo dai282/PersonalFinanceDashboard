@@ -9,11 +9,11 @@ namespace PersonalFinance.Core.Interfaces
 {
     public interface IBudgetRepository
     {
-        Task<IEnumerable<Budget>> GetAllAsync(int userId, int? month = null, int? year = null);
-        Task<Budget?> GetByIdAsync(int id, int userId);
+        Task<IEnumerable<Budget>> GetAllAsync(string userId, int? month = null, int? year = null);
+        Task<Budget?> GetByIdAsync(int id, string userId);
         Task<Budget> CreateAsync(Budget budget);
         Task<Budget?> UpdateAsync(Budget budget);
-        Task<bool> DeleteAsync(int id, int userId);
-        Task<decimal> GetActualSpendingAsync(int userId, int categoryId, int month, int year);
+        Task<bool> DeleteAsync(int id, string userId);
+        Task<decimal> GetActualSpendingAsync(string userId, int categoryId, int month, int year);
     }
 }
